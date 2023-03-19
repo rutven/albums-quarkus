@@ -1,14 +1,13 @@
 package name.legkodymov.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Objects;
+
 @Entity
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -54,4 +53,16 @@ public class Person {
         this.status = status;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(name, person.name) && Objects.equals(birthDate, person.birthDate) && status == person.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, birthDate, status);
+    }
 }
