@@ -10,6 +10,9 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.jboss.logging.Logger;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -19,11 +22,14 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
+    private final Logger LOGGER = Logger.getLogger(PersonResource.class);
+
     @Inject
     PersonRepository repository;
 
     @GET
     public List<Person> list() {
+        LOGGER.info("Get all persons");
         return repository.listAll(Sort.by("name"));
     }
 
@@ -69,6 +75,7 @@ public class PersonResource {
     @GET
     @Path("/search/{name}")
     public Person search(String name) {
+        LOGGER.info("Search name - " + name);
         return repository.findByName(name);
     }
 

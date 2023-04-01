@@ -12,7 +12,8 @@ import name.legkodymov.model.Status;
 public class PersonRepository implements PanacheRepository<Person> {
 
     public Person findByName(String name) {
-        return find("name", name).firstResult();
+        String search = "%" + name + "%";
+        return find("name like ?1", search).firstResult();
     }
 
     public List<Person> findAlive() {
